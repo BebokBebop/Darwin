@@ -1,0 +1,287 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}              
+\usepackage[utf8]{inputenc}                                      
+\usepackage[OT4]{fontenc}               
+\usepackage[polish]{babel}                           
+\selectlanguage{polish}
+\usepackage{indentfirst} 
+\usepackage[dvips]{graphicx}
+\usepackage{tabularx}
+\usepackage{color}
+\usepackage{hyperref} 
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{ifpdf}
+\usepackage{mathtext} % polskie znaki w trybie matematycznym
+%\makeindex  % utworzenie skorowidza (w dokumencie pdf)
+\usepackage{lmodern}
+%\usepackage[osf]{libertine}
+\usepackage{filecontents}
+
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+
+\newcounter{nextYear}
+\setcounter{nextYear}{\the\year}
+\stepcounter{nextYear}
+
+% rozszerzenie nieco strony
+%\setlength{\topmargin}{-1cm} \setlength{\textheight}{24.5cm}
+%\setlength{\textwidth}{17cm} \addtolength{\hoffset}{-1.5cm}
+%\setlength{\parindent}{0.5cm} \setlength{\footskip}{2cm}
+%\linespread{1.2} % odstep pomiedzy wierszami
+
+\ifpdf
+\DeclareGraphicsRule{*}{mps}{*}{}
+\fi
+
+
+\newcommand{\tl}[1]{\textbf{#1}} 
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{} % usuwanie bieżących ustawień
+\fancyhead[LE,RO]{\small\bfseries\thepage}
+\fancyhead[LO]{\small\bfseries\rightmark}
+\fancyhead[RE]{\small\bfseries\leftmark}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\addtolength{\headheight}{0.5pt} % pionowy odstęp na kreskę
+\fancypagestyle{plain}{%
+\fancyhead{} % usuń p. górne na stronach pozbawionych numeracji
+\renewcommand{\headrulewidth}{0pt} % pozioma kreska
+}
+
+\lstset{%
+language=C++,%
+commentstyle=\textit,%
+identifierstyle=\textsf,%
+keywordstyle=\sffamily\bfseries, %
+%captionpos=b,%
+tabsize=3,%
+frame=lines,%
+numbers=left,%
+numberstyle=\tiny,%
+numbersep=5pt,%
+breaklines=true,%
+morekeywords={std,vector,string,ref,params_result},%
+escapeinside={(*@}{@*)},%
+%basicstyle=\footnotesize,%
+%keywords={double,int,for,if,return,vector,matrix,void,public,class,string,%
+%float,sizeof,char,FILE,while,do,const}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% mala zmiana sposobu wyswietlania notek bocznych
+\let\oldmarginpar\marginpar
+\renewcommand\marginpar[1]{%
+  {\linespread{0.85}\normalfont\scriptsize%
+%   \oldmarginpar[\vspace{-1.5ex}\raggedleft\scriptsize\color{black}\textsf{#1}]%    left pages
+%                {\vspace{-1.5ex}\raggedright\scriptsize\color{black}\textsf{#1}}% right pades
+\oldmarginpar[\hspace{1cm}\begin{minipage}{3cm}\raggedleft\scriptsize\color{black}\textsf{#1}\end{minipage}]%    left pages
+{\hspace{0cm}\begin{minipage}{3cm}\raggedright\scriptsize\color{black}\textsf{#1}\end{minipage}}% right pages
+}%
+}
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+%%%% TODO LIST GENERATOR %%%%%%%%%
+
+%%%%%%%%%%%%%% END OF TODO LIST GENERATOR %%%%%%%%%%%
+
+
+
+\begin{document}
+\cleardoublepage
+%%%%%%%%%%%%%%%%%%%55
+
+
+\frenchspacing
+\clearpage
+
+\thispagestyle{empty}
+\begin{center}
+{\Large\sf Politechnika Śląska w Gliwicach \\  % Alma Mater
+Wydział Automatyki, Elektroniki i Informatyki
+
+}
+
+\vfill
+
+%\includegraphics[width=0.15\textwidth]{graf/polsl.pdf}
+
+\vfill\vfill
+
+{\Huge\sffamily\bfseries Podstawy Programowania Komputerów} \\ % tu podać nazwę przedmiotu
+
+\vfill\vfill
+
+{\LARGE\sf Darwin}  % a tu temat laborki :-))
+
+
+\vfill \vfill\vfill\vfill
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{tabular}{ll}
+	\toprule
+	autor                       & Hubert Przegendza            \\
+	prowadzący                  & dr inż. Krzysztof Simiński   \\
+	rok akademicki              & 2017/2018  \\
+	kierunek                    & informatyka                  \\
+	rodzaj studiów              & SSI                          \\
+	semestr                     & 1                            \\
+	termin laboratorium         & poniedziałek, 08:30 -- 10:00 \\
+	grupa                       & 2                            \\
+	sekcja                      & 6                            \\
+	termin oddania sprawozdania & \the\year-01-25              \\
+	data oddania sprawozdania   & \the\year-01-25              \\
+	\bottomrule 
+\end{tabular}
+
+\end{center}
+%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Treść zadania}
+Napisać program symulujący ewolucję populacji osobników. Populacja może liczyć dowolną liczbę osobników.
+Każdy osobnik zawiera chromosom, który jest ciągiem liczb naturalnych. Chromosomy mogą być
+różnej długości. W każdym pokoleniu wylosowywanych jest k par osobników, które się następnie krzyżują.
+Krzyżowanie polega na tym, że u każdego osobnika dochodzi do pęknięcia chromosomu w dowolnym
+miejscu. Część początkowa chromosomu jednego osobnika łączy się z częścią końcową drugiego. Inaczej
+mówiąc: osobniki wymieniają się fragmentami swoich chromosomów. Jeden osobnik może być wylosowany
+do kilku krzyżowań. Po dokonaniu wszystkich krzyżowań w pokoleniu sprawdzane jest przystosowanie
+osobników do warunków środowiska. W tym celu dla każdego osobnika wyznaczana jest wartość $f \in [0, 1]$
+funkcji dopasowania. Osobniki, dla których wartość $f < w$ (gdzie $w$ jest progiem wymierania), są usuwane
+z populacji. Osobniki, dla których $f > r$ (gdzie {$r$} jest progiem rozmnażania) są klonowane. A osobniki,
+dla których$ w \leq f \leq r$ pozostają w populacji, ale się nie rozmnażają.
+Program uruchamiany jest z linii poleceń z wykorzystaniem następujących przełączników (kolejność
+przełączników jest dowolna):
+\begin{tabular}{ll}
+\texttt{-i} plik wejściowy z populacją\\
+\texttt{-o} plik wyjściowy z populacją\\
+\texttt{-w} współczynnik wymierania $w \in [0, 1]$\\
+\texttt{-r} współczynnik rozmnażania $r \in [0, 1]$\\
+\texttt{-p} liczba pokoleń p\\
+\texttt{-k} liczba k par osobników losowanych do krzyżowania \\
+\end{tabular}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Analiza zadania}
+W pliku wejściowym znajdują się ciągi liczb naturalnych i spacji, które nazywać będziemy chromosomami. Każdy osobny chromosom program zapisuje jako listę dynamiczną znaków, której głowa należy do innego obiektu, który nazywać będziemy osobnikiem. Wpisuję wszystkie osobniki do listy dynamicznej, której głowę zamieszczam w obiekcie nazywanym dalej Populacją.
+
+Aby zasymulować jedno pokolenie należy wpierw pokrzyżować chromosomy. Należy wybrać dwa przypadkowe osobniki, przeciąć ich chromosomy w przypadkowych miejscach i zamienić ich końcówki.
+
+Następną operacją wykonywaną podczas jednego pokoleniu jest test zdatności osobników. Należy sprecyzować kiedy chromosom jest dobrze dostosowany i przedstawić to za pomocą liczby z przedziału $[0,1]$, po czym usunąć dany chromosom, jeśli jego dostosowanie jest poniżej granicy wymierania, sklonować go, jeśli jego dostosowanie jest powyżej granicy rozmnażania lub nic z chromosomem nie robić, jeśli jego dostosowanie mieści się między tymi wartościami.
+
+Aby zwiększyć funkcjonalność programu, zaprojektowałem dodatkową funkcję, która po każdym teście populacji usuwa przypadkowe chromosomy, dopóki ich liczba w~liście będzie równa podanej wewnątrz funkcji \lstinline|main|. Dzięki temu mogę mieć pewnosć, że lista chromosomów nie urośnie do zbyt dużych rozmiarów.
+
+\begin{figure}
+\centering
+\usetikzlibrary{arrows}
+\begin{tikzpicture}
+
+\node[draw, rectangle, minimum size = 4cm] at(-5.5, 8) { \texttt{ Głowa } };
+\draw(-1.5, 8)  node[draw, circle, minimum size = 2cm]{ \texttt{ Os.1 } };
+\draw(-3, 4)  node[draw, circle, minimum size = 2cm]{ \texttt{ Os.2 } };
+\draw(-4.5, 0)  node[draw, circle, minimum size = 2cm]{ \texttt{ Os.3 } };
+\draw(-6, -4)  node[draw, circle, minimum size = 2cm]{ \texttt{ Os.4 } };
+\draw(0.5, 8)  node[draw, circle, minimum size = 1cm]{ '1' };
+\draw(2, 8)  node[draw, circle, minimum size = 1cm]{ '7' };
+\draw(3.5, 8)  node[draw, circle, minimum size = 1cm]{ '4' };
+\draw(5, 8)  node[draw, circle, minimum size = 1cm]{ '\textbackslash0' };
+\draw(-1, 4)  node[draw, circle, minimum size = 1cm]{ '0' };
+\draw(0.5, 4)  node[draw, circle, minimum size = 1cm]{ '2' };
+\draw(2, 4)  node[draw, circle, minimum size = 1cm]{ ' ' };
+\draw(3.5, 4)  node[draw, circle, minimum size = 1cm]{ '5' };
+\draw(5, 4)  node[draw, circle, minimum size = 1cm]{ '\textbackslash0' };
+\draw(-2.5, 0)  node[draw, circle, minimum size = 1cm]{ '3' };
+\draw(-1, 0)  node[draw, circle, minimum size = 1cm]{ '3' };
+\draw(0.5, 0)  node[draw, circle, minimum size = 1cm]{ ' ' };
+\draw(2, 0)  node[draw, circle, minimum size = 1cm]{ '3' };
+\draw(3.5, 0)  node[draw, circle, minimum size = 1cm]{ '9' };
+\draw(5, 0)  node[draw, circle, minimum size = 1cm]{ '\textbackslash0' };
+\draw(-4, -4)  node[draw, circle, minimum size = 1cm]{ '9' };
+\draw(-2.5, -4)  node[draw, circle, minimum size = 1cm]{ '1' };
+\draw(-1, -4)  node[draw, circle, minimum size = 1cm]{ '\textbackslash0' };
+\draw[-triangle 45](-3.5, 8) -- (-2.5, 8);
+\draw[-triangle 45](-1.5, 7) -- (-3, 5);
+\draw[-triangle 45](-2, 4) -- (-1.5, 4);
+\draw[-triangle 45](-0.5, 4) -- (0, 4);
+\draw[-triangle 45](1, 4) -- (1.5, 4);
+\draw[-triangle 45](2.5, 4) -- (3, 4);
+\draw[-triangle 45](4, 4) -- (4.5, 4);
+\draw[-triangle 45](-0.5, 8) -- (0, 8);
+\draw[-triangle 45](1, 8) -- (1.5, 8);
+\draw[-triangle 45](2.5, 8) -- (3, 8);
+\draw[-triangle 45](4, 8) -- (4.5, 8);
+\draw[-triangle 45](-3, 3) -- (-4.5, 1);
+\draw[-triangle 45](-3.5, 0) -- (-3, 0);
+\draw[-triangle 45](-2, 0) -- (-1.5, 0);
+\draw[-triangle 45](-0.5, 0) -- (0, 0);
+\draw[-triangle 45](1, 0) -- (1.5, 0);
+\draw[-triangle 45](2.5, 0) -- (3, 0);
+\draw[-triangle 45](4, 0) -- (4.5, 0);
+\draw[-triangle 45](-4.5, -1) -- (-6, -3);
+\draw[-triangle 45](-5, -4) -- (-4.5, -4);
+\draw[-triangle 45];
+\draw[-triangle 45](-3.5, -4) -- (-3, -4);
+\draw[-triangle 45](-2, -4) -- (-1.5, -4);
+\end{tikzpicture}
+\caption{Przykładowa Populacja - lista osobników. Została utworzona przez wczytanie z pliku ciągów ``2 5'', ``174'', ``33 39'' oraz ``91'' do kolejno osobników \texttt{Os.1}, \texttt{Os.2}, \texttt{Os.3} oraz \texttt{Os.4}, a na głowę ich listy wskazuję obiekt \texttt{Głowa}}
+\label{fig:Populacja}
+\end{figure} 
+
+
+\subsection{Struktury danych}
+W programie wykorzystano listę do przechowywania osobników, tj. osobnych chromosmów.
+Każdy obiekt z listy osobników przechowuje wskaźnik na głowę listy znaków chromosomu, wskaźnik na następnego osobnika oraz liczbę znaków swojego chromosomu jako liczbę naturalnę.
+Każdy element listy znaków przechowującej chromosom zawiera jeden znak oraz wskaźnik na następny element listy.
+\section{Specyfikacja zewnętrzna}
+\label{sec:sp:zewnetrzna}
+Program jest uruchamiany z linii poleceń.
+Należy przekazać do programu nazwy plików: wejściowego i wyjściowego po odpowiednich przełącznikach (odpowiednio: \texttt{-i} dla pliku wejściowego i \texttt{-o} dla pliku wyjściowego). Po przełącznikach \texttt{-r}, \texttt{-w}, \texttt{-k}, \texttt{-p} należy podać kolejno: granicę rozmnażania, granicę wymierania, ile par należy srzyżować na jedno pokolenie i ile pokoleń należy zasymulować. Przykładowe wywołanie:
+\begin{verbatim}
+program -i listaPopulacji -o wynikSymulacji.txt -r 0.5 
+-w 0.3 -k 15 -p 500
+\end{verbatim}
+Pliki są plikami tekstowymi, ale mogą mieć dowolne rozszerzenie (lub go nie mieć.) Przełączniki mogą być podane w dowolnej kolejności. Uruchomienie programu z parametrem \texttt{-h} lub \texttt{help}  
+\begin{verbatim}
+program -h
+program help
+\end{verbatim}
+powoduje wyświetlenie pomocy. Uruchomienie programu z nieprawidłowymi parametrami lub bez żadnych powoduje wyświetlenie komunikatu 
+\begin{verbatim}
+Zle uzycie. Wpisz: "Darwin.exe -h " lub "Darwin.exe help",
+ zeby otrzymac pomoc.
+\end{verbatim}
+Podanie nieprawidłowej nazwy pliku, niepodanie któregoś z przełączników lub podanie go kilkukrotnie lub niepodanie liczby po przełączniku wymagającym liczbę albo podanie liczby spoza zakresu powoduje wyświetlenie odpowiedniego komunikatu:
+\begin{verbatim}
+>Nie mozna otworzyc pliku wejsciowego
+>Przelacznik [-x] zostal uzyty wiecej niz raz
+>Przelacznik [-x] nie zostal uzyty
+>Wartosc po [-x] nie jest liczbą	
+>Podane [-x] jest poza zakresem <0-1>
+\end{verbatim}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Specyfikacja wewnętrzna}\label{sec:sp-wew}
+Specyfikacja wewnętrzna jest w załączniku do sprawozdania.
+
+\section{Testowanie}
+Program został przetestowany na różnego rodzaju plikach. Nie ma niepoprawnych znaków, tj. można użyć jakiekolwiek znaki jako część chromosomu. Dzięki temu można stosować funkcje operujące na np. literach alfabetu. Plik pusty nie powoduje zgłoszenia błędu, ale utworzenie pustego pliku wynikowego (został podany pusty zbiór liczb i pusty zbiór został zwrócony).
+
+\section{Wnioski}
+Program był bardzo wymagający. Przez wysoki poziom skomplikowania występowały trudne do zlokalizowania błędy.
+Zagnieżdżone struktury w klasach wymogły na mnie napisanie różnego typu konstruktorów. Nauczyłem się podstaw programowania obiektowego.
+
+\end{document}
+% Koniec wieńczy dzieło.
